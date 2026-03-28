@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riftbound Notes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0b0d;
+  --surface:#111318;
+  --surface2:#181c24;
+  --border:#ffffff12;
+  --border2:#ffffff22;
+  --accent:#c8a84b;
+  --accent2:#4b7bc8;
+  --win:#3a7c5a;
+  --lose:#7c3a3a;
+  --text:#e8e4d9;
+  --muted:#7a7670;
+  --plus:#5ab87a;
+  --minus:#e05c5c;
+  --font:'Syne',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+.app{max-width:900px;margin:0 auto;padding:24px 16px}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.header-logo{width:36px;height:36px;border:1.5px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--accent);font-family:var(--mono)}
+.header-title{font-size:18px;font-weight:700;letter-spacing:0.04em}
+.header-sub{font-size:11px;color:var(--muted);font-family:var(--mono);letter-spacing:0.08em;margin-top:2px}
+.header-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--plus)}
+.sync-dot.offline{background:var(--minus)}
+.sync-dot.syncing{background:var(--accent);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.sync-label{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.key-badge{font-size:10px;color:var(--accent);font-family:var(--mono);background:rgba(200,168,75,0.1);border:1px solid rgba(200,168,75,0.2);padding:3px 8px;border-radius:4px;cursor:pointer}
+
+/* passkey screen */
+.passkey-screen{min-height:80vh;display:flex;align-items:center;justify-content:center}
+.passkey-card{background:var(--surface);border:1px solid var(--border2);border-radius:14px;padding:36px;max-width:400px;width:100%;text-align:center}
+.passkey-logo{width:56px;height:56px;border:2px solid var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--accent);font-family:var(--mono);margin:0 auto 20px}
+.passkey-title{font-size:20px;font-weight:700;margin-bottom:8px}
+.passkey-sub{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:24px}
+.passkey-input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:16px;padding:13px 16px;outline:none;text-align:center;letter-spacing:0.1em;margin-bottom:12px}
+.passkey-input:focus{border-color:var(--accent)}
+.passkey-btn{width:100%;padding:13px;background:var(--accent);border:none;border-radius:8px;color:#0a0b0d;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.06em}
+.passkey-btn:hover{opacity:0.85}
+.passkey-warn{font-size:11px;color:var(--muted);margin-top:12px;font-family:var(--mono)}
+
+.tabs{display:flex;gap:4px;margin-bottom:24px;background:var(--surface);border-radius:8px;padding:4px;border:1px solid var(--border)}
+.tab{flex:1;padding:9px 12px;border:none;background:transparent;color:var(--muted);font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;border-radius:5px;transition:all 0.15s;letter-spacing:0.02em}
+.tab.active{background:var(--surface2);color:var(--text);border:1px solid var(--border2)}
+.section{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-bottom:16px}
+.section-title{font-size:11px;font-weight:700;letter-spacing:0.12em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;font-family:var(--mono)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:600px){.grid2,.grid3{grid-template-columns:1fr}.card-grid{grid-template-columns:1fr !important}.stat-grid{grid-template-columns:1fr 1fr !important}}
+label{display:block;font-size:11px;color:var(--muted);letter-spacing:0.06em;margin-bottom:5px;font-family:var(--mono)}
+input[type=text],input[type=date],select,textarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:6px;color:var(--text);font-family:var(--font);font-size:13px;padding:9px 12px;outline:none;transition:border-color 0.15s}
+input[type=text]:focus,input[type=date]:focus,select:focus,textarea:focus{border-color:var(--accent)}
+select option{background:#1a1e28}
+textarea{resize:vertical;min-height:70px;line-height:1.5}
+.toggle-group{display:flex;gap:6px}
+.toggle-btn{flex:1;padding:9px 8px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:6px;font-family:var(--font);font-size:12px;cursor:pointer;transition:all 0.15s}
+.toggle-btn.active-first{background:#1a2a3a;border-color:var(--accent2);color:var(--accent2)}
+.toggle-btn.active-second{background:#2a1a1a;border-color:#e0884b;color:#e0884b}
+.outcome-group{display:flex;gap:8px}
+.outcome-btn{flex:1;padding:11px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:6px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;letter-spacing:0.04em}
+.outcome-btn.win{background:rgba(58,124,90,0.2);border-color:var(--win);color:var(--plus)}
+.outcome-btn.lose{background:rgba(124,58,58,0.2);border-color:var(--lose);color:var(--minus)}
+.submit-btn{width:100%;padding:13px;background:var(--accent);border:none;border-radius:8px;color:#0a0b0d;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.06em;transition:opacity 0.15s;margin-top:8px}
+.submit-btn:hover{opacity:0.85}
+.submit-btn:disabled{opacity:0.4;cursor:not-allowed}
+.tag-input-wrap{position:relative}
+.tag-input{padding-right:90px !important}
+.tag-add-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);padding:4px 12px;background:var(--surface);border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-size:11px;cursor:pointer;font-family:var(--mono)}
+.tag-add-btn:hover{border-color:var(--accent);color:var(--accent)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;min-height:28px}
+.tag{display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:4px;font-size:12px;font-family:var(--mono)}
+.tag.plus{background:rgba(90,184,122,0.12);border:1px solid rgba(90,184,122,0.3);color:var(--plus)}
+.tag.minus{background:rgba(224,92,92,0.12);border:1px solid rgba(224,92,92,0.3);color:var(--minus)}
+.tag-x{cursor:pointer;opacity:0.6;font-size:13px;line-height:1}
+.tag-x:hover{opacity:1}
+.analytics-header{display:flex;gap:10px;align-items:flex-end;margin-bottom:20px;flex-wrap:wrap}
+.analytics-header select{max-width:240px}
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.stat-card{background:var(--surface2);border-radius:8px;padding:14px;text-align:center;border:1px solid var(--border)}
+.stat-num{font-size:26px;font-weight:700;font-family:var(--mono);color:var(--accent)}
+.stat-label{font-size:10px;color:var(--muted);letter-spacing:0.08em;margin-top:4px;font-family:var(--mono)}
+.matchup-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.mu-btn{padding:6px 14px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:4px;font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s}
+.mu-btn.active{background:rgba(200,168,75,0.15);border-color:var(--accent);color:var(--accent)}
+.insight-block{margin-bottom:12px}
+.insight-label{font-size:10px;font-family:var(--mono);letter-spacing:0.1em;color:var(--muted);margin-bottom:6px}
+.insight-row{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+.insight-bar-wrap{flex:1;height:6px;background:var(--surface2);border-radius:3px;overflow:hidden}
+.insight-bar{height:100%;border-radius:3px;transition:width 0.4s}
+.insight-bar.plus{background:var(--plus)}
+.insight-bar.minus{background:var(--minus)}
+.insight-name{font-size:12px;min-width:120px;color:var(--text)}
+.insight-pct{font-size:11px;font-family:var(--mono);color:var(--muted);min-width:45px;text-align:right}
+.mulligan-row{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;background:var(--surface2);margin-bottom:6px}
+.mull-card{font-size:12px;flex:1;font-family:var(--mono)}
+.mull-stat{display:flex;gap:3px;align-items:center}
+.mull-pct{font-size:11px;font-family:var(--mono);font-weight:500;min-width:36px;text-align:center;padding:3px 6px;border-radius:3px}
+.mull-pct.kept{background:rgba(90,184,122,0.15);color:var(--plus)}
+.mull-pct.sent{background:rgba(224,92,92,0.15);color:var(--minus)}
+.mull-label{font-size:9px;color:var(--muted);letter-spacing:0.06em;font-family:var(--mono)}
+.record-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.record-item{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.record-badge{font-size:11px;font-family:var(--mono);font-weight:700;padding:3px 8px;border-radius:4px;letter-spacing:0.06em;white-space:nowrap}
+.badge-win{background:rgba(58,124,90,0.25);color:var(--plus)}
+.badge-lose{background:rgba(124,58,58,0.25);color:var(--minus)}
+.record-meta{flex:1;min-width:0}
+.record-vs{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.record-date{font-size:10px;color:var(--muted);font-family:var(--mono)}
+.empty-state{text-align:center;padding:40px;color:var(--muted);font-size:13px}
+.no-data{text-align:center;padding:24px;color:var(--muted);font-size:12px;font-family:var(--mono)}
+.notif{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:6px;font-size:13px;font-weight:700;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:999;font-family:var(--font)}
+.notif.success{background:var(--plus);color:#0a0b0d}
+.notif.error{background:var(--minus);color:#fff}
+.notif.show{opacity:1}
+.wl-bar{display:flex;height:8px;border-radius:4px;overflow:hidden;margin-top:6px}
+.wl-bar-w{background:var(--plus)}
+.wl-bar-l{background:var(--minus)}
+.del-btn{padding:4px 10px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:4px;font-size:11px;cursor:pointer;font-family:var(--mono);white-space:nowrap}
+.del-btn:hover{border-color:var(--minus);color:var(--minus)}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.loading{text-align:center;padding:40px;color:var(--muted);font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+
+<!-- Passkey Screen -->
+<div id="passkey-screen" class="passkey-screen" style="display:none">
+  <div class="passkey-card">
+    <div class="passkey-logo">RB</div>
+    <div class="passkey-title">Riftbound Notes</div>
+    <div class="passkey-sub">Enter your passkey to access your notes.<br>Use the same passkey on all your devices to keep data in sync.</div>
+    <input type="text" class="passkey-input" id="passkey-input" placeholder="your passkey" autocomplete="off" spellcheck="false">
+    <button class="passkey-btn" onclick="submitPasskey()">Enter</button>
+    <div class="passkey-warn">Don't lose your passkey — there's no recovery. Anyone with it can see your notes.</div>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="main-app" class="app" style="display:none">
+  <div class="header">
+    <div class="header-logo">RB</div>
+    <div>
+      <div class="header-title">Riftbound Notes</div>
+      <div class="header-sub">Match tracker & analytics</div>
+    </div>
+    <div class="header-right">
+      <div class="sync-dot" id="sync-dot"></div>
+      <span class="sync-label" id="sync-label">synced</span>
+      <span class="key-badge" id="key-badge" onclick="changePasskey()" title="Click to change passkey"></span>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('log')">Match Log</button>
+    <button class="tab" onclick="switchTab('analytics')">Analytics</button>
+    <button class="tab" onclick="switchTab('history')">History</button>
+  </div>
+
+  <!-- LOG TAB -->
+  <div id="tab-log">
+    <div class="section">
+      <div class="section-title">Match Info</div>
+      <div class="grid3" style="margin-bottom:12px">
+        <div>
+          <label>Date</label>
+          <input type="date" id="match-date">
+        </div>
+        <div>
+          <label>My Legend (deck)</label>
+          <input type="text" id="my-legend" placeholder="e.g. Ezreal">
+        </div>
+        <div>
+          <label>Opponent Legend</label>
+          <input type="text" id="opp-legend" placeholder="e.g. Garen">
+        </div>
+      </div>
+      <div class="grid2">
+        <div>
+          <label>Turn order</label>
+          <div class="toggle-group">
+            <button class="toggle-btn" id="btn-first" onclick="setOrder('first')">First</button>
+            <button class="toggle-btn" id="btn-second" onclick="setOrder('second')">Second</button>
+          </div>
+        </div>
+        <div>
+          <label>Outcome</label>
+          <div class="outcome-group">
+            <button class="outcome-btn" id="btn-win" onclick="setOutcome('win')">Win</button>
+            <button class="outcome-btn" id="btn-lose" onclick="setOutcome('lose')">Lose</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Plays & Cards — Impact on Win %</div>
+      <div class="grid2">
+        <div>
+          <label>+ Win % (what worked)</label>
+          <div class="tag-input-wrap">
+            <input type="text" id="plus-input" class="tag-input" placeholder="Card or play...">
+            <button class="tag-add-btn" onclick="addTag('plus')">Add</button>
+          </div>
+          <div class="tags" id="plus-tags"></div>
+        </div>
+        <div>
+          <label>- Win % (what hurt)</label>
+          <div class="tag-input-wrap">
+            <input type="text" id="minus-input" class="tag-input" placeholder="Card or play...">
+            <button class="tag-add-btn" onclick="addTag('minus')">Add</button>
+          </div>
+          <div class="tags" id="minus-tags"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Opening Hand & Mulligan</div>
+      <div class="grid2">
+        <div>
+          <label>Opening hand (before mulligan)</label>
+          <textarea id="hand-before" placeholder="List cards, one per line or comma-separated..."></textarea>
+        </div>
+        <div>
+          <label>Cards mulliganed away (sent to bottom)</label>
+          <textarea id="hand-mulled" placeholder="Cards you chose to put back..."></textarea>
+        </div>
+      </div>
+      <div style="margin-top:10px">
+        <label>Final hand (after mulligan)</label>
+        <textarea id="hand-after" placeholder="Hand you kept and played with..."></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Notes</div>
+      <textarea id="match-notes" style="min-height:90px" placeholder="Any additional thoughts, lines played, mistakes, observations..."></textarea>
+    </div>
+
+    <button class="submit-btn" id="save-btn" onclick="saveMatch()">Save Match</button>
+  </div>
+
+  <!-- ANALYTICS TAB -->
+  <div id="tab-analytics" style="display:none">
+    <div class="section">
+      <div class="section-title">Select Legend to Analyse</div>
+      <div class="analytics-header">
+        <div style="flex:1">
+          <label>Your legend</label>
+          <select id="ana-legend" onchange="renderAnalytics()">
+            <option value="">— choose legend —</option>
+          </select>
+        </div>
+        <div style="color:var(--muted);font-size:11px;font-family:var(--mono);padding-bottom:10px" id="ana-count"></div>
+      </div>
+      <div id="ana-body"><div class="empty-state">Select a legend above to see your analysis</div></div>
+    </div>
+  </div>
+
+  <!-- HISTORY TAB -->
+  <div id="tab-history" style="display:none">
+    <div class="section">
+      <div class="section-title">All Matches</div>
+      <div id="history-list"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+const SUPABASE_URL = 'https://vluovmjupvpelgrmysjh.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsdW92bWp1cHZwZWxncm15c2poIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NTA1MDcsImV4cCI6MjA5MDIyNjUwN30.ieQRH9d2MSdG21Qp3U8b8aW482SPOWwdjwSg5wRWCiI';
+
+let passkey = '';
+let matches = [];
+let plusTags = [];
+let minusTags = [];
+let turnOrder = null;
+let outcome = null;
+let activeMU = '__all__';
+
+// ── Supabase helpers ──────────────────────────────────────────
+async function dbFetch(method, body){
+  const opts = {
+    method,
+    headers:{
+      'Content-Type':'application/json',
+      'apikey': SUPABASE_KEY,
+      'Authorization': 'Bearer '+SUPABASE_KEY,
+      'Prefer': method==='POST' ? 'return=representation' : ''
+    }
+  };
+  if(body) opts.body = JSON.stringify(body);
+  const r = await fetch(SUPABASE_URL+'/rest/v1/matches'+opts.url_suffix||'', opts);
+  return r;
+}
+
+async function loadMatches(){
+  setSyncState('syncing');
+  try{
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/matches?passkey=eq.${encodeURIComponent(passkey)}&order=created_at.asc`,
+      {headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}}
+    );
+    if(!r.ok) throw new Error('load failed');
+    const rows = await r.json();
+    matches = rows.map(row=>({...row.match_data, _dbid: row.id}));
+    setSyncState('synced');
+  }catch(e){
+    setSyncState('offline');
+    showNotif('Could not load — check connection','error');
+  }
+}
+
+async function insertMatch(matchData){
+  setSyncState('syncing');
+  try{
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/matches`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey':SUPABASE_KEY,
+        'Authorization':'Bearer '+SUPABASE_KEY,
+        'Prefer':'return=representation'
+      },
+      body: JSON.stringify({passkey, match_data: matchData})
+    });
+    if(!r.ok) throw new Error('insert failed');
+    const rows = await r.json();
+    const saved = {...rows[0].match_data, _dbid: rows[0].id};
+    matches.push(saved);
+    setSyncState('synced');
+    return true;
+  }catch(e){
+    setSyncState('offline');
+    showNotif('Save failed — check connection','error');
+    return false;
+  }
+}
+
+async function deleteMatch(dbid){
+  setSyncState('syncing');
+  try{
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/matches?id=eq.${dbid}`,{
+      method:'DELETE',
+      headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}
+    });
+    if(!r.ok) throw new Error('delete failed');
+    matches = matches.filter(m=>m._dbid!==dbid);
+    setSyncState('synced');
+    renderHistory();
+    populateLegendSelect();
+    showNotif('Match deleted','success');
+  }catch(e){
+    setSyncState('offline');
+    showNotif('Delete failed','error');
+  }
+}
+
+// ── Sync state UI ─────────────────────────────────────────────
+function setSyncState(state){
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot'+(state==='offline'?' offline':state==='syncing'?' syncing':'');
+  lbl.textContent = state;
+}
+
+// ── Passkey ───────────────────────────────────────────────────
+function initPasskey(){
+  const stored = localStorage.getItem('rb-passkey');
+  if(stored){
+    passkey = stored;
+    startApp();
+  } else {
+    document.getElementById('passkey-screen').style.display='flex';
+    document.getElementById('passkey-input').focus();
+  }
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('passkey-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter') submitPasskey();
+  });
+});
+
+function submitPasskey(){
+  const val = document.getElementById('passkey-input').value.trim();
+  if(!val){alert('Please enter a passkey.');return;}
+  passkey = val;
+  localStorage.setItem('rb-passkey', passkey);
+  document.getElementById('passkey-screen').style.display='none';
+  startApp();
+}
+
+function changePasskey(){
+  if(!confirm('Change passkey? You will need to use the new passkey on all devices. Your existing data stays under the old key.')) return;
+  localStorage.removeItem('rb-passkey');
+  passkey='';matches=[];
+  document.getElementById('main-app').style.display='none';
+  document.getElementById('passkey-screen').style.display='flex';
+  document.getElementById('passkey-input').value='';
+  document.getElementById('passkey-input').focus();
+}
+
+async function startApp(){
+  document.getElementById('main-app').style.display='block';
+  document.getElementById('key-badge').textContent = passkey.length>12 ? passkey.slice(0,12)+'…' : passkey;
+  document.getElementById('match-date').value = new Date().toISOString().slice(0,10);
+  await loadMatches();
+  populateLegendSelect();
+  renderHistory();
+}
+
+// ── Tab switching ─────────────────────────────────────────────
+function switchTab(t){
+  ['log','analytics','history'].forEach(id=>{
+    document.getElementById('tab-'+id).style.display = id===t?'block':'none';
+  });
+  document.querySelectorAll('.tab').forEach((b,i)=>{
+    b.classList.toggle('active',['log','analytics','history'][i]===t);
+  });
+  if(t==='analytics'){populateLegendSelect();renderAnalytics();}
+  if(t==='history'){loadMatches().then(()=>{populateLegendSelect();renderHistory();});}
+}
+
+// ── Form helpers ──────────────────────────────────────────────
+function setOrder(o){
+  turnOrder=o;
+  document.getElementById('btn-first').className='toggle-btn'+(o==='first'?' active-first':'');
+  document.getElementById('btn-second').className='toggle-btn'+(o==='second'?' active-second':'');
+}
+function setOutcome(o){
+  outcome=o;
+  document.getElementById('btn-win').className='outcome-btn'+(o==='win'?' win':'');
+  document.getElementById('btn-lose').className='outcome-btn'+(o==='lose'?' lose':'');
+}
+function addTag(type){
+  const inp=document.getElementById(type+'-input');
+  const val=inp.value.trim();
+  if(!val)return;
+  if(type==='plus') plusTags.push(val);
+  else minusTags.push(val);
+  inp.value='';renderTags();inp.focus();
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('plus-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addTag('plus');}});
+  document.getElementById('minus-input').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addTag('minus');}});
+});
+function removeTag(type,idx){
+  if(type==='plus') plusTags.splice(idx,1);
+  else minusTags.splice(idx,1);
+  renderTags();
+}
+function renderTags(){
+  ['plus','minus'].forEach(t=>{
+    const arr=t==='plus'?plusTags:minusTags;
+    document.getElementById(t+'-tags').innerHTML=arr.map((v,i)=>
+      `<span class="tag ${t}">${v}<span class="tag-x" onclick="removeTag('${t}',${i})">×</span></span>`
+    ).join('');
+  });
+}
+function parseCards(txt){
+  if(!txt.trim())return[];
+  return txt.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
+}
+
+// ── Save match ────────────────────────────────────────────────
+async function saveMatch(){
+  const legend=document.getElementById('my-legend').value.trim();
+  const opp=document.getElementById('opp-legend').value.trim();
+  const date=document.getElementById('match-date').value;
+  if(!legend||!opp){showNotif('Fill in both legends','error');return;}
+  if(!outcome){showNotif('Select win or lose','error');return;}
+  if(!turnOrder){showNotif('Select first or second','error');return;}
+
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true;btn.textContent='Saving...';
+
+  const m={
+    id: Date.now(),
+    date, legend, opp, turnOrder, outcome,
+    plusPlays:[...plusTags],
+    minusPlays:[...minusTags],
+    handBefore: parseCards(document.getElementById('hand-before').value),
+    handMulled: parseCards(document.getElementById('hand-mulled').value),
+    handAfter: parseCards(document.getElementById('hand-after').value),
+    notes: document.getElementById('match-notes').value.trim()
+  };
+
+  const ok = await insertMatch(m);
+  btn.disabled=false;btn.textContent='Save Match';
+  if(!ok)return;
+
+  plusTags=[];minusTags=[];turnOrder=null;outcome=null;
+  ['my-legend','opp-legend','hand-before','hand-mulled','hand-after','match-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('match-date').value=new Date().toISOString().slice(0,10);
+  renderTags();
+  document.getElementById('btn-first').className='toggle-btn';
+  document.getElementById('btn-second').className='toggle-btn';
+  document.getElementById('btn-win').className='outcome-btn';
+  document.getElementById('btn-lose').className='outcome-btn';
+  populateLegendSelect();
+  showNotif('Match saved!','success');
+}
+
+// ── Analytics ─────────────────────────────────────────────────
+function populateLegendSelect(){
+  const legends=[...new Set(matches.map(m=>m.legend))].sort();
+  const sel=document.getElementById('ana-legend');
+  const cur=sel.value;
+  sel.innerHTML='<option value="">— choose legend —</option>';
+  legends.forEach(l=>{const o=document.createElement('option');o.value=l;o.textContent=l;sel.appendChild(o);});
+  if(cur)sel.value=cur;
+}
+
+function renderAnalytics(){
+  const leg=document.getElementById('ana-legend').value;
+  const body=document.getElementById('ana-body');
+  if(!leg){body.innerHTML='<div class="empty-state">Select a legend above to see your analysis</div>';document.getElementById('ana-count').textContent='';return;}
+  const ms=matches.filter(m=>m.legend===leg);
+  document.getElementById('ana-count').textContent=ms.length+' match'+(ms.length!==1?'es':'');
+  if(!ms.length){body.innerHTML='<div class="no-data">No matches found for '+leg+'</div>';return;}
+  const opps=[...new Set(ms.map(m=>m.opp))].sort();
+  const filtered=activeMU==='__all__'?ms:ms.filter(m=>m.opp===activeMU);
+  const wins=filtered.filter(m=>m.outcome==='win').length;
+  const total=filtered.length;
+  const wr=total>0?Math.round(wins/total*100):0;
+  const first=filtered.filter(m=>m.turnOrder==='first');
+  const second=filtered.filter(m=>m.turnOrder==='second');
+  const wrFirst=first.length>0?Math.round(first.filter(m=>m.outcome==='win').length/first.length*100):null;
+  const wrSecond=second.length>0?Math.round(second.filter(m=>m.outcome==='win').length/second.length*100):null;
+
+  const plusMap={},minusMap={};
+  filtered.forEach(m=>{
+    m.plusPlays.forEach(p=>{if(!plusMap[p])plusMap[p]={apps:0,wins:0};plusMap[p].apps++;if(m.outcome==='win')plusMap[p].wins++;});
+    m.minusPlays.forEach(p=>{if(!minusMap[p])minusMap[p]={apps:0,wins:0};minusMap[p].apps++;if(m.outcome==='win')minusMap[p].wins++;});
+  });
+
+  const mullMap={};
+  filtered.forEach(m=>{
+    const allCards=[...new Set([...m.handBefore,...m.handAfter,...m.handMulled])];
+    allCards.forEach(card=>{
+      if(!mullMap[card])mullMap[card]={kept:0,keptWin:0,sent:0,sentWin:0};
+      const wasSent=m.handMulled.includes(card);
+      if(wasSent){mullMap[card].sent++;if(m.outcome==='win')mullMap[card].sentWin++;}
+      else if(m.handBefore.includes(card)||m.handAfter.includes(card)){mullMap[card].kept++;if(m.outcome==='win')mullMap[card].keptWin++;}
+    });
+  });
+
+  const plusArr=Object.entries(plusMap).sort((a,b)=>b[1].apps-a[1].apps);
+  const minusArr=Object.entries(minusMap).sort((a,b)=>b[1].apps-a[1].apps);
+  const mullArr=Object.entries(mullMap).filter(([c,d])=>d.kept+d.sent>=2).sort((a,b)=>(b[1].kept+b[1].sent)-(a[1].kept+a[1].sent));
+
+  const muBtns=`<div class="matchup-tabs">
+    <button class="mu-btn ${activeMU==='__all__'?'active':''}" onclick="setMU('__all__')">All (${ms.length})</button>
+    ${opps.map(o=>{
+      const oMs=ms.filter(m=>m.opp===o);
+      const oW=oMs.filter(m=>m.outcome==='win').length;
+      return `<button class="mu-btn ${activeMU===o?'active':''}" onclick="setMU(${JSON.stringify(o)})">vs ${o} (${oW}W-${oMs.length-oW}L)</button>`;
+    }).join('')}
+  </div>`;
+
+  const wlW=total>0?Math.round(wins/total*100):0;
+  const statsHtml=`<div class="stat-grid">
+    <div class="stat-card"><div class="stat-num">${wr}%</div><div class="stat-label">Win rate</div></div>
+    <div class="stat-card"><div class="stat-num">${wins}-${total-wins}</div><div class="stat-label">W-L record</div></div>
+    <div class="stat-card"><div class="stat-num">${wrFirst!==null?wrFirst+'%':'—'}</div><div class="stat-label">Going first</div></div>
+    <div class="stat-card"><div class="stat-num">${wrSecond!==null?wrSecond+'%':'—'}</div><div class="stat-label">Going second</div></div>
+  </div>
+  <div class="wl-bar" style="margin-bottom:20px"><div class="wl-bar-w" style="width:${wlW}%"></div><div class="wl-bar-l" style="flex:1"></div></div>`;
+
+  const plusHtml=plusArr.length?plusArr.map(([name,d])=>{
+    const pct=Math.round(d.wins/d.apps*100);
+    return `<div class="insight-row"><span class="insight-name">${name}</span><div class="insight-bar-wrap"><div class="insight-bar plus" style="width:${pct}%"></div></div><span class="insight-pct">${pct}% <span style="font-size:9px;color:var(--muted)">(${d.apps}x)</span></span></div>`;
+  }).join(''):'<div class="no-data">No data yet</div>';
+
+  const minusHtml=minusArr.length?minusArr.map(([name,d])=>{
+    const pct=Math.round(d.wins/d.apps*100);
+    return `<div class="insight-row"><span class="insight-name">${name}</span><div class="insight-bar-wrap"><div class="insight-bar minus" style="width:${100-pct}%"></div></div><span class="insight-pct">${pct}% wr <span style="font-size:9px;color:var(--muted)">(${d.apps}x)</span></span></div>`;
+  }).join(''):'<div class="no-data">No data yet</div>';
+
+  const mullHtml=mullArr.length?mullArr.map(([card,d])=>{
+    const kPct=d.kept>0?Math.round(d.keptWin/d.kept*100):null;
+    const sPct=d.sent>0?Math.round(d.sentWin/d.sent*100):null;
+    return `<div class="mulligan-row">
+      <span class="mull-card">${card}</span>
+      <div class="mull-stat"><div><div class="mull-pct kept">${kPct!==null?kPct+'%':'—'}</div><div class="mull-label">kept</div></div></div>
+      <div class="mull-stat"><div><div class="mull-pct sent">${sPct!==null?sPct+'%':'—'}</div><div class="mull-label">sent</div></div></div>
+    </div>`;
+  }).join(''):'<div class="no-data">Log more games with mulligan data to see card-level stats</div>';
+
+  body.innerHTML=muBtns+statsHtml+
+    `<div class="card-grid" style="margin-bottom:16px">
+      <div class="section" style="margin:0"><div class="section-title">+ Win % plays</div><div class="insight-block">${plusHtml}</div></div>
+      <div class="section" style="margin:0"><div class="section-title">- Win % plays</div><div class="insight-block">${minusHtml}</div></div>
+    </div>
+    <div class="section" style="margin:0"><div class="section-title">Mulligan impact</div>${mullHtml}</div>`;
+}
+
+function setMU(mu){activeMU=mu;renderAnalytics();}
+
+// ── History ───────────────────────────────────────────────────
+function renderHistory(){
+  const list=document.getElementById('history-list');
+  if(!matches.length){list.innerHTML='<div class="empty-state">No matches logged yet</div>';return;}
+  const sorted=[...matches].reverse();
+  list.innerHTML=sorted.map(m=>`
+    <div class="record-item">
+      <span class="record-badge badge-${m.outcome}">${m.outcome.toUpperCase()}</span>
+      <div class="record-meta">
+        <div class="record-vs">${m.legend} vs ${m.opp} <span style="color:var(--muted);font-size:11px">(went ${m.turnOrder})</span></div>
+        <div class="record-date">${m.date}</div>
+      </div>
+      <button class="del-btn" onclick="deleteMatch(${m._dbid})">Delete</button>
+    </div>
+  `).join('');
+}
+
+// ── Notif ─────────────────────────────────────────────────────
+function showNotif(msg,type='success'){
+  const n=document.getElementById('notif');
+  n.textContent=msg;
+  n.className='notif '+type+' show';
+  setTimeout(()=>n.classList.remove('show'),2200);
+}
+
+// ── Boot ──────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', initPasskey);
+</script>
+</body>
+</html>
