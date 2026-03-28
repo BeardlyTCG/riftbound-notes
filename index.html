@@ -15,7 +15,6 @@
   --win:#3a7c5a;--lose:#7c3a3a;
   --text:#e8e4d9;--muted:#7a7670;
   --plus:#5ab87a;--minus:#e05c5c;
-  --discord:#5865f2;
   --font:'Syne',sans-serif;--mono:'IBM Plex Mono',monospace;
 }
 html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
@@ -54,21 +53,18 @@ input[type=text],input[type=date],select,textarea{width:100%;background:var(--su
 input[type=text]:focus,input[type=date]:focus,select:focus,textarea:focus{border-color:var(--accent)}
 select option{background:#1a1e28}
 textarea{resize:vertical;min-height:70px;line-height:1.5}
-
-/* legend combo input */
 .legend-wrap{position:relative}
 .legend-suggestions{position:absolute;top:100%;left:0;right:0;background:#1e2330;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;z-index:100;max-height:200px;overflow-y:auto;display:none}
 .legend-suggestions.open{display:block}
 .legend-suggestion{padding:8px 12px;font-size:13px;cursor:pointer;transition:background 0.1s}
-.legend-suggestion:hover,.legend-suggestion.highlighted{background:rgba(200,168,75,0.1);color:var(--accent)}
+.legend-suggestion:hover{background:rgba(200,168,75,0.1);color:var(--accent)}
 .legend-suggestion.custom-opt{color:var(--accent2);border-top:1px solid var(--border)}
-
 .toggle-group{display:flex;gap:6px}
 .toggle-btn{flex:1;padding:9px 8px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:6px;font-family:var(--font);font-size:12px;cursor:pointer;transition:all 0.15s}
 .toggle-btn.active-first{background:#1a2a3a;border-color:var(--accent2);color:var(--accent2)}
 .toggle-btn.active-second{background:#2a1a1a;border-color:#e0884b;color:#e0884b}
 .outcome-group{display:flex;gap:8px}
-.outcome-btn{flex:1;padding:11px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:6px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s;letter-spacing:0.04em}
+.outcome-btn{flex:1;padding:11px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:6px;font-family:var(--font);font-size:13px;font-weight:500;cursor:pointer;transition:all 0.15s}
 .outcome-btn.win{background:rgba(58,124,90,0.2);border-color:var(--win);color:var(--plus)}
 .outcome-btn.lose{background:rgba(124,58,58,0.2);border-color:var(--lose);color:var(--minus)}
 .submit-btn{width:100%;padding:13px;background:var(--accent);border:none;border-radius:8px;color:#0a0b0d;font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;letter-spacing:0.06em;transition:opacity 0.15s;margin-top:8px}
@@ -95,20 +91,16 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
 .matchup-tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
 .mu-btn{padding:6px 14px;border:1px solid var(--border2);background:transparent;color:var(--muted);border-radius:4px;font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s}
 .mu-btn.active{background:rgba(200,168,75,0.15);border-color:var(--accent);color:var(--accent)}
-
-/* AI summary */
 .ai-summary-wrap{background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:20px;margin-bottom:16px}
-.ai-summary-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.ai-summary-header{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .ai-badge{font-size:10px;font-family:var(--mono);font-weight:700;letter-spacing:0.1em;padding:3px 8px;border-radius:4px;background:rgba(200,168,75,0.15);border:1px solid rgba(200,168,75,0.3);color:var(--accent);flex-shrink:0}
 .ai-summary-title{font-size:13px;font-weight:700;color:var(--text);flex:1}
-.ai-actions{display:flex;gap:8px;margin-left:auto}
-.ai-refresh{padding:5px 12px;background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-size:11px;font-family:var(--mono);cursor:pointer;transition:all 0.15s}
-.ai-refresh:hover{border-color:var(--accent);color:var(--accent)}
-.ai-refresh:disabled{opacity:0.3;cursor:not-allowed}
-.discord-btn{padding:5px 14px;background:rgba(88,101,242,0.15);border:1px solid rgba(88,101,242,0.4);border-radius:4px;color:#8b9aff;font-size:11px;font-family:var(--mono);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px}
-.discord-btn:hover{background:rgba(88,101,242,0.25);border-color:rgba(88,101,242,0.7)}
-.discord-btn:disabled{opacity:0.3;cursor:not-allowed}
-.discord-btn-icon{width:14px;height:14px;flex-shrink:0}
+.ai-actions{display:flex;gap:6px;margin-left:auto}
+.ai-btn{padding:5px 12px;background:transparent;border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-size:11px;font-family:var(--mono);cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.ai-btn:hover{border-color:var(--accent);color:var(--accent)}
+.ai-btn:disabled{opacity:0.3;cursor:not-allowed}
+.ai-btn.discord{background:rgba(88,101,242,0.1);border-color:rgba(88,101,242,0.3);color:#8b9aff}
+.ai-btn.discord:hover{background:rgba(88,101,242,0.2);border-color:rgba(88,101,242,0.6)}
 .ai-body{font-size:13px;line-height:1.8;color:var(--text)}
 .ai-body p{margin-bottom:10px}
 .ai-body p:last-child{margin-bottom:0}
@@ -121,9 +113,7 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
 .ai-loading-dots span:nth-child(2){animation-delay:0.2s}
 .ai-loading-dots span:nth-child(3){animation-delay:0.4s}
 @keyframes dotpulse{0%,80%,100%{opacity:0.2}40%{opacity:1}}
-.ai-error{color:var(--minus);font-size:12px;font-family:var(--mono)}
-
-/* mulligan table */
+.ai-error{color:var(--minus);font-size:12px;font-family:var(--mono);line-height:1.6}
 .mull-table{width:100%;border-collapse:collapse}
 .mull-table th{font-size:10px;font-family:var(--mono);color:var(--muted);letter-spacing:0.08em;text-align:left;padding:6px 10px;border-bottom:1px solid var(--border)}
 .mull-table td{padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px}
@@ -147,10 +137,10 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
 .empty-state{text-align:center;padding:40px;color:var(--muted);font-size:13px}
 .no-data{text-align:center;padding:20px;color:var(--muted);font-size:12px;font-family:var(--mono)}
 .loading-state{text-align:center;padding:30px;color:var(--muted);font-family:var(--mono);font-size:12px}
-.notif{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:6px;font-size:13px;font-weight:700;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:999;font-family:var(--font);max-width:280px}
+.notif{position:fixed;bottom:20px;right:20px;padding:10px 18px;border-radius:6px;font-size:13px;font-weight:700;opacity:0;transition:opacity 0.2s;pointer-events:none;z-index:999;font-family:var(--font);max-width:300px}
 .notif.success{background:var(--plus);color:#0a0b0d}
 .notif.error{background:var(--minus);color:#fff}
-.notif.discord{background:var(--discord);color:#fff}
+.notif.discord{background:#5865f2;color:#fff}
 .notif.show{opacity:1}
 </style>
 </head>
@@ -195,15 +185,21 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
         <div>
           <label>My Legend (deck)</label>
           <div class="legend-wrap">
-            <input type="text" id="my-legend" placeholder="Type or select legend..." autocomplete="off" oninput="onLegendInput('my-legend','my-suggestions')" onfocus="onLegendInput('my-legend','my-suggestions')" onblur="hideSuggestions('my-suggestions',200)">
-            <div class="legend-suggestions" id="my-suggestions"></div>
+            <input type="text" id="my-legend" placeholder="Type or select..." autocomplete="off"
+              oninput="onLegendInput('my-legend','my-sugg')"
+              onfocus="onLegendInput('my-legend','my-sugg')"
+              onblur="hideSugg('my-sugg')">
+            <div class="legend-suggestions" id="my-sugg"></div>
           </div>
         </div>
         <div>
           <label>Opponent Legend</label>
           <div class="legend-wrap">
-            <input type="text" id="opp-legend" placeholder="Type or select legend..." autocomplete="off" oninput="onLegendInput('opp-legend','opp-suggestions')" onfocus="onLegendInput('opp-legend','opp-suggestions')" onblur="hideSuggestions('opp-suggestions',200)">
-            <div class="legend-suggestions" id="opp-suggestions"></div>
+            <input type="text" id="opp-legend" placeholder="Type or select..." autocomplete="off"
+              oninput="onLegendInput('opp-legend','opp-sugg')"
+              onfocus="onLegendInput('opp-legend','opp-sugg')"
+              onblur="hideSugg('opp-sugg')">
+            <div class="legend-suggestions" id="opp-sugg"></div>
           </div>
         </div>
       </div>
@@ -268,10 +264,10 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
           <label>Your legend</label>
           <div class="legend-wrap">
             <input type="text" id="ana-legend" placeholder="Type or select legend..." autocomplete="off"
-              oninput="onLegendInput('ana-legend','ana-suggestions',true)"
-              onfocus="onLegendInput('ana-legend','ana-suggestions',true)"
-              onblur="hideSuggestions('ana-suggestions',200)">
-            <div class="legend-suggestions" id="ana-suggestions"></div>
+              oninput="onLegendInput('ana-legend','ana-sugg',true)"
+              onfocus="onLegendInput('ana-legend','ana-sugg',true)"
+              onblur="hideSugg('ana-sugg')">
+            <div class="legend-suggestions" id="ana-sugg"></div>
           </div>
         </div>
         <div style="color:var(--muted);font-size:11px;font-family:var(--mono);padding-bottom:10px" id="ana-count"></div>
@@ -293,105 +289,81 @@ textarea{resize:vertical;min-height:70px;line-height:1.5}
 <script>
 const SUPABASE_URL='https://vluovmjupvpelgrmysjh.supabase.co';
 const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZsdW92bWp1cHZwZWxncm15c2poIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ2NTA1MDcsImV4cCI6MjA5MDIyNjUwN30.ieQRH9d2MSdG21Qp3U8b8aW482SPOWwdjwSg5wRWCiI';
-const BACKEND_URL='https://riftbound-backend-ud7s.onrender.com';
+const BACKEND='https://riftbound-backend-ud7s.onrender.com';
 
-// ── Predefined legends ────────────────────────────────────────
 const KNOWN_LEGENDS=[
   'Rengar','Pyke','Vi','Lillia','Yi Unleashed','Vex','Ivern','Diana',
-  'Le Blanc','Kha\'Zix','Poppy','Rumble','Lucian','Draven','Rek\'Sai',
+  "Le Blanc","Kha'Zix",'Poppy','Rumble','Lucian','Draven',"Rek'Sai",
   'Ornn','Jax','Irelia','Azir','Ezrael','Renata Glasc','Sivir','Fiora',
-  'Kai\'Sa','Volibear','Jinx','Darius','Ahri','Lee Sin','Yasuo','Leona',
+  "Kai'Sa",'Volibear','Jinx','Darius','Ahri','Lee Sin','Yasuo','Leona',
   'Teemo','Viktor','Miss Fortune','Sett','Annie','Yi Proving','Lux','Garen'
 ];
 
-function toTitleCase(str){
-  return str.replace(/\w\S*/g,txt=>txt.charAt(0).toUpperCase()+txt.substr(1).toLowerCase())
-    .replace(/\bOf\b/g,'of').replace(/\bThe\b/g,'the');
-}
+function toTitleCase(s){return s.replace(/\w\S*/g,t=>t.charAt(0).toUpperCase()+t.substr(1).toLowerCase());}
 function normalizeLegend(val){
+  if(!val.trim())return '';
   const t=toTitleCase(val.trim());
-  // fix known special cases
-  const fixes={'Kha\'Zix':"Kha'Zix",'Rek\'Sai':"Rek'Sai",'Kai\'Sa':"Kai'Sa",'Le Blanc':'Le Blanc','Miss Fortune':'Miss Fortune','Lee Sin':'Lee Sin','Yi Unleashed':'Yi Unleashed','Yi Proving':'Yi Proving','Renata Glasc':'Renata Glasc'};
-  return fixes[t]||t;
+  const fixes={"Kha'Zix":"Kha'Zix","Rek'Sai":"Rek'Sai","Kai'Sa":"Kai'Sa",
+    'Le Blanc':'Le Blanc','Miss Fortune':'Miss Fortune','Lee Sin':'Lee Sin',
+    'Yi Unleashed':'Yi Unleashed','Yi Proving':'Yi Proving','Renata Glasc':'Renata Glasc'};
+  // check known legends case-insensitively
+  const known=KNOWN_LEGENDS.find(l=>l.toLowerCase()===t.toLowerCase());
+  return known||fixes[t]||t;
 }
 
 // ── Legend autocomplete ───────────────────────────────────────
-function onLegendInput(inputId, suggId, analyticsMode=false){
+function onLegendInput(inputId,suggId,analyticsMode=false){
   const inp=document.getElementById(inputId);
   const box=document.getElementById(suggId);
   const val=inp.value.trim().toLowerCase();
-
-  // Build candidate list: known legends + legends from match history
-  const historyLegends=analyticsMode
-    ? [...new Set(matches.map(m=>m.legend))]
-    : [...new Set([...matches.map(m=>m.legend),...matches.map(m=>m.opp)])];
-  const allLegends=[...new Set([...KNOWN_LEGENDS,...historyLegends])].sort();
-
-  let filtered = val
-    ? allLegends.filter(l=>l.toLowerCase().includes(val))
-    : allLegends;
-
-  // Check if typed value is already an exact match
-  const exactMatch = allLegends.some(l=>l.toLowerCase()===val);
-  const showCustom = val && !exactMatch;
-
-  if(!filtered.length && !showCustom){box.classList.remove('open');return;}
-
-  box.innerHTML = filtered.map(l=>
-    `<div class="legend-suggestion" onmousedown="selectLegend('${inputId}','${suggId}','${l.replace(/'/g,"\\'")}',${analyticsMode})">${l}</div>`
-  ).join('') + (showCustom
-    ? `<div class="legend-suggestion custom-opt" onmousedown="selectLegend('${inputId}','${suggId}','${normalizeLegend(val).replace(/'/g,"\\'")}',${analyticsMode})">Add "${normalizeLegend(val)}"</div>`
-    : '');
+  const histLeg=analyticsMode
+    ?[...new Set(matches.map(m=>m.legend))]
+    :[...new Set([...matches.map(m=>m.legend),...matches.map(m=>m.opp)])];
+  const all=[...new Set([...KNOWN_LEGENDS,...histLeg])].sort();
+  const filtered=val?all.filter(l=>l.toLowerCase().includes(val)):all;
+  const exactMatch=all.some(l=>l.toLowerCase()===val);
+  const showCustom=val&&!exactMatch;
+  if(!filtered.length&&!showCustom){box.classList.remove('open');return;}
+  box.innerHTML=filtered.map(l=>{
+    const safe=l.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return`<div class="legend-suggestion" onmousedown="selectLegend('${inputId}','${suggId}','${safe}',${analyticsMode})">${l}</div>`;
+  }).join('')+(showCustom?`<div class="legend-suggestion custom-opt" onmousedown="selectLegend('${inputId}','${suggId}','${normalizeLegend(val).replace(/'/g,"\\'")}',${analyticsMode})">Add "${normalizeLegend(val)}"</div>`:'');
   box.classList.add('open');
 }
-
-function selectLegend(inputId, suggId, value, analyticsMode){
+function selectLegend(inputId,suggId,value,analyticsMode){
   document.getElementById(inputId).value=value;
   document.getElementById(suggId).classList.remove('open');
-  if(analyticsMode){
-    activeLegend=value;
-    activeMU='__all__';
-    renderAnalytics();
-  }
+  if(analyticsMode){activeLegend=value;activeMU='__all__';renderAnalytics();}
 }
+function hideSugg(suggId){setTimeout(()=>document.getElementById(suggId).classList.remove('open'),200);}
 
-function hideSuggestions(suggId, delay){
-  setTimeout(()=>document.getElementById(suggId).classList.remove('open'), delay);
-}
-
-// ── App state ─────────────────────────────────────────────────
+// ── State ─────────────────────────────────────────────────────
 let passkey='',matches=[],plusTags=[],minusTags=[],turnOrder=null,outcome=null;
 let activeLegend='',activeMU='__all__';
 let aiCache={},currentAISummary=null,currentMulligan=null,currentStats=null;
 
 // ── DB ────────────────────────────────────────────────────────
 function dbH(){return{'Content-Type':'application/json','apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY};}
-
 async function loadMatches(){
   setSyncState('syncing');
   try{
     const r=await fetch(`${SUPABASE_URL}/rest/v1/matches?passkey=eq.${encodeURIComponent(passkey)}&order=created_at.asc`,{headers:dbH()});
     if(!r.ok)throw new Error();
-    const rows=await r.json();
-    matches=rows.map(row=>({...row.match_data,_dbid:row.id}));
+    matches=(await r.json()).map(row=>({...row.match_data,_dbid:row.id}));
     setSyncState('synced');
   }catch(e){setSyncState('offline');showNotif('Could not load — check connection','error');}
 }
-
 async function insertMatch(data){
   setSyncState('syncing');
   try{
     const r=await fetch(`${SUPABASE_URL}/rest/v1/matches`,{
-      method:'POST',headers:{...dbH(),'Prefer':'return=representation'},
-      body:JSON.stringify({passkey,match_data:data})
-    });
+      method:'POST',headers:{...dbH(),'Prefer':'return=representation'},body:JSON.stringify({passkey,match_data:data})});
     if(!r.ok)throw new Error();
     const rows=await r.json();
     matches.push({...rows[0].match_data,_dbid:rows[0].id});
     setSyncState('synced');return true;
   }catch(e){setSyncState('offline');showNotif('Save failed — check connection','error');return false;}
 }
-
 async function deleteMatch(dbid){
   setSyncState('syncing');
   try{
@@ -402,7 +374,7 @@ async function deleteMatch(dbid){
   }catch(e){setSyncState('offline');showNotif('Delete failed','error');}
 }
 
-// ── Claude AI ─────────────────────────────────────────────────
+// ── AI via backend ────────────────────────────────────────────
 async function getAISummary(legendMatches,mu){
   const filtered=mu==='__all__'?legendMatches:legendMatches.filter(m=>m.opp===mu);
   if(!filtered.length)return null;
@@ -412,6 +384,11 @@ async function getAISummary(legendMatches,mu){
   const wins=filtered.filter(m=>m.outcome==='win').length;
   const total=filtered.length;
   const wr=Math.round(wins/total*100);
+  const first=filtered.filter(m=>m.turnOrder==='first');
+  const second=filtered.filter(m=>m.turnOrder==='second');
+  const wrF=first.length?Math.round(first.filter(m=>m.outcome==='win').length/first.length*100):null;
+  const wrS=second.length?Math.round(second.filter(m=>m.outcome==='win').length/second.length*100):null;
+
   const mullMap={};
   filtered.forEach(m=>{
     const all=[...new Set([...m.handBefore,...m.handAfter,...m.handMulled])];
@@ -424,108 +401,68 @@ async function getAISummary(legendMatches,mu){
   const mullStats=Object.entries(mullMap).filter(([,d])=>d.kept+d.sent>=2).map(([card,d])=>{
     const kP=d.kept>0?Math.round(d.keptWin/d.kept*100):null;
     const sP=d.sent>0?Math.round(d.sentWin/d.sent*100):null;
-    return `${card}: kept WR=${kP!==null?kP+'%':'n/a'}(${d.kept}g), sent WR=${sP!==null?sP+'%':'n/a'}(${d.sent}g)`;
+    return`${card}: kept WR=${kP!==null?kP+'%':'n/a'}(${d.kept}g), sent WR=${sP!==null?sP+'%':'n/a'}(${d.sent}g)`;
   }).join('\n');
+
   const plusPlays=filtered.flatMap(m=>m.plusPlays).filter(Boolean);
   const minusPlays=filtered.flatMap(m=>m.minusPlays).filter(Boolean);
-  const notes=filtered.map(m=>`[${m.outcome.toUpperCase()} vs ${m.opp}, went ${m.turnOrder}${m.notes?'] '+m.notes:']'}`).join('\n');
+  const notes=filtered.map(m=>`[${m.outcome.toUpperCase()} vs ${m.opp}, went ${m.turnOrder}${m.notes?'] '+m.notes:']'}`);
 
-  const prompt=`You are a competitive TCG coach analysing match notes for the card game Riftbound. The player plays the "${activeLegend}" legend/deck.
-${mu!=='__all__'?`Focus: matchup vs "${mu}".`:'This covers all matchups.'}
-Stats: ${total} games, ${wr}% WR (${wins}W-${total-wins}L)
-Plays that helped win: ${plusPlays.join(', ')||'none'}
-Plays that hurt: ${minusPlays.join(', ')||'none'}
-Mulligan data:\n${mullStats||'none'}
-Match notes:\n${notes}
-
-Write a sharp coaching summary. Reference actual card/play names. Use these exact sections:
-**Overview**
-2-3 sentences on the overall picture.
-**What is winning you games**
-Key plays/cards/patterns from wins. Be specific and direct.
-**What is costing you games**
-Patterns from losses. Be specific.
-**Mulligan guide**
-What to keep, what to send. Only mention cards with enough data.
-**Key takeaways**
-3-5 bullet points to remember next game.
-Write like a coach, not a report. Short and useful. No padding.`;
-
-  const resp=await fetch('https://api.anthropic.com/v1/messages',{
+  const r=await fetch(`${BACKEND}/analyze`,{
     method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+    body:JSON.stringify({
+      legend:activeLegend,matchup:mu,
+      stats:{winRate:wr,wins,losses:total-wins,total,wrFirst:wrF,wrSecond:wrS},
+      mullStats,plusPlays,minusPlays,notes
+    })
   });
-  if(!resp.ok)throw new Error('Claude API '+resp.status);
-  const data=await resp.json();
-  const text=data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-  aiCache[cacheKey]=text;
-  return text;
+  if(!r.ok){const e=await r.json();throw new Error(e.error||'Backend error '+r.status);}
+  const data=await r.json();
+  aiCache[cacheKey]=data.summary;
+  return data.summary;
 }
 
 function md(text){
-  const lines=text.split('\n');
-  let html='',inList=false;
+  const lines=text.split('\n');let html='',inList=false;
   for(let line of lines){
     line=line.replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>');
-    if(/^[-*] /.test(line)){
-      if(!inList){html+='<ul>';inList=true;}
-      html+=`<li>${line.replace(/^[-*] /,'')}</li>`;
-    }else{
-      if(inList){html+='</ul>';inList=false;}
-      if(line.trim())html+=`<p>${line}</p>`;
-    }
+    if(/^[-*] /.test(line)){if(!inList){html+='<ul>';inList=true;}html+=`<li>${line.replace(/^[-*] /,'')}</li>`;}
+    else{if(inList){html+='</ul>';inList=false;}if(line.trim())html+=`<p>${line}</p>`;}
   }
-  if(inList)html+='</ul>';
-  return html;
+  if(inList)html+='</ul>';return html;
 }
 
 // ── Discord push ──────────────────────────────────────────────
 async function pushToDiscord(){
   if(!currentAISummary){showNotif('Wait for AI analysis to finish first','error');return;}
-  const btn=document.getElementById('discord-push-btn');
+  const btn=document.getElementById('discord-btn');
   btn.disabled=true;btn.textContent='Pushing...';
-
   try{
-    const payload={
-      legend:activeLegend,
-      matchup:activeMU,
-      stats:currentStats,
-      mulligan:currentMulligan,
-      aiSummary:currentAISummary
-    };
-    const r=await fetch(`${BACKEND_URL}/push`,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(payload)
+    const r=await fetch(`${BACKEND}/push`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({legend:activeLegend,matchup:activeMU,stats:currentStats,mulligan:currentMulligan,aiSummary:currentAISummary})
     });
     const data=await r.json();
     if(!r.ok)throw new Error(data.error||'Push failed');
     showNotif('Posted to Discord!','discord');
-  }catch(e){
-    showNotif('Discord push failed: '+e.message,'error');
-  }finally{
-    btn.disabled=false;btn.textContent='Push to Discord';
-  }
+  }catch(e){showNotif('Discord push failed: '+e.message,'error');}
+  finally{btn.disabled=false;btn.textContent='Push to Discord';}
 }
 
-// ── Sync state ────────────────────────────────────────────────
+// ── Sync / passkey ────────────────────────────────────────────
 function setSyncState(s){
   document.getElementById('sync-dot').className='sync-dot'+(s==='offline'?' offline':s==='syncing'?' syncing':'');
   document.getElementById('sync-label').textContent=s;
 }
-
-// ── Passkey ───────────────────────────────────────────────────
 function initPasskey(){
   const s=localStorage.getItem('rb-passkey');
-  if(s){passkey=s;startApp();}
-  else document.getElementById('passkey-screen').style.display='flex';
+  if(s){passkey=s;startApp();}else document.getElementById('passkey-screen').style.display='flex';
 }
 function submitPasskey(){
   const v=document.getElementById('passkey-input').value.trim();
   if(!v){alert('Enter a passkey.');return;}
   passkey=v;localStorage.setItem('rb-passkey',passkey);
-  document.getElementById('passkey-screen').style.display='none';
-  startApp();
+  document.getElementById('passkey-screen').style.display='none';startApp();
 }
 function changePasskey(){
   if(!confirm('Change passkey? Data stays under the old key.'))return;
@@ -538,8 +475,7 @@ async function startApp(){
   document.getElementById('main-app').style.display='block';
   document.getElementById('key-badge').textContent=passkey.length>12?passkey.slice(0,12)+'…':passkey;
   document.getElementById('match-date').value=new Date().toISOString().slice(0,10);
-  await loadMatches();
-  renderHistory();
+  await loadMatches();renderHistory();
 }
 
 // ── Tabs ──────────────────────────────────────────────────────
@@ -549,60 +485,37 @@ function switchTab(t){
   if(t==='history')loadMatches().then(()=>renderHistory());
 }
 
-// ── Form helpers ──────────────────────────────────────────────
-function setOrder(o){
-  turnOrder=o;
-  document.getElementById('btn-first').className='toggle-btn'+(o==='first'?' active-first':'');
-  document.getElementById('btn-second').className='toggle-btn'+(o==='second'?' active-second':'');
-}
-function setOutcome(o){
-  outcome=o;
-  document.getElementById('btn-win').className='outcome-btn'+(o==='win'?' win':'');
-  document.getElementById('btn-lose').className='outcome-btn'+(o==='lose'?' lose':'');
-}
-function addTag(type){
-  const inp=document.getElementById(type+'-input'),val=inp.value.trim();
-  if(!val)return;
-  (type==='plus'?plusTags:minusTags).push(val);inp.value='';renderTags();inp.focus();
-}
+// ── Form ──────────────────────────────────────────────────────
+function setOrder(o){turnOrder=o;document.getElementById('btn-first').className='toggle-btn'+(o==='first'?' active-first':'');document.getElementById('btn-second').className='toggle-btn'+(o==='second'?' active-second':'');}
+function setOutcome(o){outcome=o;document.getElementById('btn-win').className='outcome-btn'+(o==='win'?' win':'');document.getElementById('btn-lose').className='outcome-btn'+(o==='lose'?' lose':'');}
+function addTag(type){const inp=document.getElementById(type+'-input'),val=inp.value.trim();if(!val)return;(type==='plus'?plusTags:minusTags).push(val);inp.value='';renderTags();inp.focus();}
 function removeTag(type,idx){(type==='plus'?plusTags:minusTags).splice(idx,1);renderTags();}
-function renderTags(){
-  ['plus','minus'].forEach(t=>{
-    document.getElementById(t+'-tags').innerHTML=(t==='plus'?plusTags:minusTags).map((v,i)=>
-      `<span class="tag ${t}">${v}<span class="tag-x" onclick="removeTag('${t}',${i})">×</span></span>`).join('');
-  });
-}
+function renderTags(){['plus','minus'].forEach(t=>{document.getElementById(t+'-tags').innerHTML=(t==='plus'?plusTags:minusTags).map((v,i)=>`<span class="tag ${t}">${v}<span class="tag-x" onclick="removeTag('${t}',${i})">×</span></span>`).join('');});}
 function parseCards(txt){return txt.trim()?txt.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean):[];}
 
 async function saveMatch(){
-  const legendRaw=document.getElementById('my-legend').value.trim();
-  const oppRaw=document.getElementById('opp-legend').value.trim();
-  const legend=normalizeLegend(legendRaw);
-  const opp=normalizeLegend(oppRaw);
+  const legend=normalizeLegend(document.getElementById('my-legend').value);
+  const opp=normalizeLegend(document.getElementById('opp-legend').value);
   const date=document.getElementById('match-date').value;
   if(!legend||!opp){showNotif('Fill in both legends','error');return;}
   if(!outcome){showNotif('Select win or lose','error');return;}
   if(!turnOrder){showNotif('Select first or second','error');return;}
-  const btn=document.getElementById('save-btn');
-  btn.disabled=true;btn.textContent='Saving...';
+  const btn=document.getElementById('save-btn');btn.disabled=true;btn.textContent='Saving...';
   const m={id:Date.now(),date,legend,opp,turnOrder,outcome,
     plusPlays:[...plusTags],minusPlays:[...minusTags],
     handBefore:parseCards(document.getElementById('hand-before').value),
     handMulled:parseCards(document.getElementById('hand-mulled').value),
     handAfter:parseCards(document.getElementById('hand-after').value),
     notes:document.getElementById('match-notes').value.trim()};
-  const ok=await insertMatch(m);
-  btn.disabled=false;btn.textContent='Save Match';
+  const ok=await insertMatch(m);btn.disabled=false;btn.textContent='Save Match';
   if(!ok)return;
   Object.keys(aiCache).forEach(k=>{if(k.startsWith(legend+'::'))delete aiCache[k];});
   plusTags=[];minusTags=[];turnOrder=null;outcome=null;
   ['my-legend','opp-legend','hand-before','hand-mulled','hand-after','match-notes'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('match-date').value=new Date().toISOString().slice(0,10);
   renderTags();
-  document.getElementById('btn-first').className='toggle-btn';
-  document.getElementById('btn-second').className='toggle-btn';
-  document.getElementById('btn-win').className='outcome-btn';
-  document.getElementById('btn-lose').className='outcome-btn';
+  document.getElementById('btn-first').className='toggle-btn';document.getElementById('btn-second').className='toggle-btn';
+  document.getElementById('btn-win').className='outcome-btn';document.getElementById('btn-lose').className='outcome-btn';
   showNotif('Match saved!','success');
 }
 
@@ -625,7 +538,6 @@ async function renderAnalytics(){
   const wrF=first.length?Math.round(first.filter(m=>m.outcome==='win').length/first.length*100):null;
   const wrS=second.length?Math.round(second.filter(m=>m.outcome==='win').length/second.length*100):null;
 
-  // build mulligan
   const mullMap={};
   filtered.forEach(m=>{
     const all=[...new Set([...m.handBefore,...m.handAfter,...m.handMulled])];
@@ -637,7 +549,6 @@ async function renderAnalytics(){
   });
   const mullArr=Object.entries(mullMap).filter(([,d])=>d.kept+d.sent>=2).sort((a,b)=>(b[1].kept+b[1].sent)-(a[1].kept+a[1].sent));
 
-  // store for discord push
   currentStats={winRate:wr,wins,losses:total-wins,total,wrFirst:wrF,wrSecond:wrS};
   currentMulligan=mullArr.map(([card,d])=>{
     const kP=d.kept>0?Math.round(d.keptWin/d.kept*100):null;
@@ -645,13 +556,8 @@ async function renderAnalytics(){
     return{card,keptWR:kP,sentWR:sP,diff:kP!==null&&sP!==null?kP-sP:null,games:d.kept+d.sent};
   });
 
-  let muBtns=`<div class="matchup-tabs" id="mu-tabs">
-    <button class="mu-btn ${activeMU==='__all__'?'active':''}" data-mu="__all__">All (${ms.length})</button>`;
-  opps.forEach(o=>{
-    const oMs=ms.filter(m=>m.opp===o);
-    const oW=oMs.filter(m=>m.outcome==='win').length;
-    muBtns+=`<button class="mu-btn ${activeMU===o?'active':''}" data-mu="${o.replace(/"/g,'&quot;')}">vs ${o} (${oW}W-${oMs.length-oW}L)</button>`;
-  });
+  let muBtns=`<div class="matchup-tabs" id="mu-tabs"><button class="mu-btn ${activeMU==='__all__'?'active':''}" data-mu="__all__">All (${ms.length})</button>`;
+  opps.forEach(o=>{const oMs=ms.filter(m=>m.opp===o);const oW=oMs.filter(m=>m.outcome==='win').length;muBtns+=`<button class="mu-btn ${activeMU===o?'active':''}" data-mu="${o.replace(/"/g,'&quot;')}">vs ${o} (${oW}W-${oMs.length-oW}L)</button>`;});
   muBtns+='</div>';
 
   const wlW=total?Math.round(wins/total*100):0;
@@ -660,33 +566,20 @@ async function renderAnalytics(){
     <div class="stat-card"><div class="stat-num">${wins}-${total-wins}</div><div class="stat-label">W-L record</div></div>
     <div class="stat-card"><div class="stat-num">${wrF!==null?wrF+'%':'—'}</div><div class="stat-label">Going first</div></div>
     <div class="stat-card"><div class="stat-num">${wrS!==null?wrS+'%':'—'}</div><div class="stat-label">Going second</div></div>
-  </div>
-  <div class="wl-bar"><div class="wl-bar-w" style="width:${wlW}%"></div><div class="wl-bar-l" style="flex:1"></div></div>`;
+  </div><div class="wl-bar"><div class="wl-bar-w" style="width:${wlW}%"></div><div class="wl-bar-l" style="flex:1"></div></div>`;
 
-  const mullHtml=mullArr.length?`<table class="mull-table">
-    <thead><tr><th>Card</th><th>Kept WR</th><th>Sent WR</th><th>Diff</th><th>Games</th></tr></thead>
-    <tbody>${mullArr.map(([card,d])=>{
-      const kP=d.kept>0?Math.round(d.keptWin/d.kept*100):null;
-      const sP=d.sent>0?Math.round(d.sentWin/d.sent*100):null;
-      const diff=kP!==null&&sP!==null?kP-sP:null;
-      return`<tr>
-        <td style="font-family:var(--mono);color:var(--text)">${card}</td>
-        <td><span class="mull-pct kept">${kP!==null?kP+'%':'—'}</span> <span style="font-size:10px;color:var(--muted)">(${d.kept})</span></td>
-        <td><span class="mull-pct sent">${sP!==null?sP+'%':'—'}</span> <span style="font-size:10px;color:var(--muted)">(${d.sent})</span></td>
-        <td><span class="mull-diff ${diff===null?'neu':diff>0?'pos':'neg'}">${diff===null?'—':(diff>0?'+':'')+diff+'%'}</span></td>
-        <td style="color:var(--muted);font-family:var(--mono);font-size:11px">${d.kept+d.sent}</td>
-      </tr>`;}).join('')}</tbody></table>`
-    :'<div class="no-data">Log more games with mulligan data to see card stats</div>';
-
-  const discordIcon=`<svg class="discord-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.002.022.015.043.033.055a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>`;
+  const mullHtml=mullArr.length?`<table class="mull-table"><thead><tr><th>Card</th><th>Kept WR</th><th>Sent WR</th><th>Diff</th><th>Games</th></tr></thead><tbody>${mullArr.map(([card,d])=>{
+    const kP=d.kept>0?Math.round(d.keptWin/d.kept*100):null;const sP=d.sent>0?Math.round(d.sentWin/d.sent*100):null;const diff=kP!==null&&sP!==null?kP-sP:null;
+    return`<tr><td style="font-family:var(--mono);color:var(--text)">${card}</td><td><span class="mull-pct kept">${kP!==null?kP+'%':'—'}</span> <span style="font-size:10px;color:var(--muted)">(${d.kept})</span></td><td><span class="mull-pct sent">${sP!==null?sP+'%':'—'}</span> <span style="font-size:10px;color:var(--muted)">(${d.sent})</span></td><td><span class="mull-diff ${diff===null?'neu':diff>0?'pos':'neg'}">${diff===null?'—':(diff>0?'+':'')+diff+'%'}</span></td><td style="color:var(--muted);font-family:var(--mono);font-size:11px">${d.kept+d.sent}</td></tr>`;
+  }).join('')}</tbody></table>`:'<div class="no-data">Log more games with mulligan data to see card stats</div>';
 
   const aiHtml=`<div class="ai-summary-wrap">
     <div class="ai-summary-header">
       <span class="ai-badge">AI</span>
       <span class="ai-summary-title">Coach Analysis${activeMU!=='__all__'?' — vs '+activeMU:''}</span>
       <div class="ai-actions">
-        <button class="ai-refresh" id="ai-refresh-btn" onclick="refreshAI()" disabled>Refresh</button>
-        <button class="discord-btn" id="discord-push-btn" onclick="pushToDiscord()" disabled>${discordIcon}Push to Discord</button>
+        <button class="ai-btn" id="refresh-btn" onclick="refreshAI()" disabled>Refresh</button>
+        <button class="ai-btn discord" id="discord-btn" onclick="pushToDiscord()" disabled>Push to Discord</button>
       </div>
     </div>
     <div id="ai-content"><div class="ai-loading"><div class="ai-loading-dots"><span></span><span></span><span></span></div><span>Analysing your match data...</span></div></div>
@@ -703,20 +596,19 @@ async function renderAnalytics(){
 }
 
 async function loadAISummary(legendMatches){
-  const contentEl=document.getElementById('ai-content');
-  const refreshBtn=document.getElementById('ai-refresh-btn');
-  const discordBtn=document.getElementById('discord-push-btn');
-  if(!contentEl)return;
+  const el=document.getElementById('ai-content');
+  const rb=document.getElementById('refresh-btn');
+  const db=document.getElementById('discord-btn');
+  if(!el)return;
   try{
     const text=await getAISummary(legendMatches,activeMU);
     if(!document.getElementById('ai-content'))return;
     currentAISummary=text||null;
-    contentEl.innerHTML=text?`<div class="ai-body">${md(text)}</div>`:'<div class="no-data">Not enough data yet — log more matches</div>';
-    if(refreshBtn)refreshBtn.disabled=false;
-    if(discordBtn)discordBtn.disabled=!text;
+    el.innerHTML=text?`<div class="ai-body">${md(text)}</div>`:'<div class="no-data">Not enough data yet — log more matches</div>';
+    if(rb)rb.disabled=false;if(db)db.disabled=!text;
   }catch(e){
-    if(contentEl)contentEl.innerHTML=`<div class="ai-error">Could not load analysis — check connection and try again.</div>`;
-    if(refreshBtn)refreshBtn.disabled=false;
+    if(el)el.innerHTML=`<div class="ai-error">Could not load analysis.<br><span style="opacity:0.6">${e.message}</span></div>`;
+    if(rb)rb.disabled=false;
   }
 }
 
@@ -726,12 +618,11 @@ async function refreshAI(){
   const filtered=activeMU==='__all__'?ms:ms.filter(m=>m.opp===activeMU);
   delete aiCache[leg+'::'+activeMU+'::'+filtered.length];
   currentAISummary=null;
-  const contentEl=document.getElementById('ai-content');
-  const refreshBtn=document.getElementById('ai-refresh-btn');
-  const discordBtn=document.getElementById('discord-push-btn');
-  if(contentEl)contentEl.innerHTML='<div class="ai-loading"><div class="ai-loading-dots"><span></span><span></span><span></span></div><span>Analysing your match data...</span></div>';
-  if(refreshBtn)refreshBtn.disabled=true;
-  if(discordBtn)discordBtn.disabled=true;
+  const el=document.getElementById('ai-content');
+  const rb=document.getElementById('refresh-btn');
+  const db=document.getElementById('discord-btn');
+  if(el)el.innerHTML='<div class="ai-loading"><div class="ai-loading-dots"><span></span><span></span><span></span></div><span>Analysing your match data...</span></div>';
+  if(rb)rb.disabled=true;if(db)db.disabled=true;
   await loadAISummary(ms);
 }
 
@@ -739,20 +630,11 @@ async function refreshAI(){
 function renderHistory(){
   const list=document.getElementById('history-list');
   if(!matches.length){list.innerHTML='<div class="empty-state">No matches logged yet</div>';return;}
-  list.innerHTML=[...matches].reverse().map(m=>`
-    <div class="record-item">
-      <span class="record-badge badge-${m.outcome}">${m.outcome.toUpperCase()}</span>
-      <div class="record-meta">
-        <div class="record-vs">${m.legend} vs ${m.opp} <span style="color:var(--muted);font-size:11px">(went ${m.turnOrder})</span></div>
-        <div class="record-date">${m.date}</div>
-      </div>
-      <button class="del-btn" onclick="deleteMatch(${m._dbid})">Delete</button>
-    </div>`).join('');
+  list.innerHTML=[...matches].reverse().map(m=>`<div class="record-item"><span class="record-badge badge-${m.outcome}">${m.outcome.toUpperCase()}</span><div class="record-meta"><div class="record-vs">${m.legend} vs ${m.opp} <span style="color:var(--muted);font-size:11px">(went ${m.turnOrder})</span></div><div class="record-date">${m.date}</div></div><button class="del-btn" onclick="deleteMatch(${m._dbid})">Delete</button></div>`).join('');
 }
 
 function showNotif(msg,type='success'){
-  const n=document.getElementById('notif');
-  n.textContent=msg;n.className='notif '+type+' show';
+  const n=document.getElementById('notif');n.textContent=msg;n.className='notif '+type+' show';
   setTimeout(()=>n.classList.remove('show'),2500);
 }
 
